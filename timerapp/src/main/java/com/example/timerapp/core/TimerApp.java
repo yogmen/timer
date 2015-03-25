@@ -1,7 +1,5 @@
 package com.example.timerapp.core;
 
-import android.app.Activity;
-import android.os.SystemClock;
 
 /**
  * Created by robert on 25/03/15.

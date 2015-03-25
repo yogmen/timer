@@ -26,7 +26,7 @@ public class MainActivity extends Activity{
     private TextView mTimeCounter;
 
     private final int WHAT = 9;
-    private final int FREQUECY  = 100; //ms
+    private final int FREQUENCY = 100; //ms
 
     private CustomTimerService mCustomTimerService;
     private ServiceConnection mCustomTimerServiceConnection = new ServiceConnection() {
@@ -45,7 +45,7 @@ public class MainActivity extends Activity{
         @Override
         public void handleMessage(Message msg) {
             updateTime();
-            sendMessageDelayed(Message.obtain(this, WHAT), FREQUECY);
+            sendMessageDelayed(Message.obtain(this, WHAT), FREQUENCY);
         }
     };
 
@@ -96,7 +96,7 @@ public class MainActivity extends Activity{
     protected void onStart() {
         super.onStart();
         bindService(new Intent(this, CustomTimerService.class), mCustomTimerServiceConnection, Context.BIND_AUTO_CREATE);
-        mHandler.sendMessageDelayed(Message.obtain(mHandler, WHAT), FREQUECY);
+        mHandler.sendMessageDelayed(Message.obtain(mHandler, WHAT), FREQUENCY);
     }
 
     @Override
