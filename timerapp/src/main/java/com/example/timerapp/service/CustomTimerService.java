@@ -15,6 +15,8 @@ import com.example.timerapp.R;
 import com.example.timerapp.activity.MainActivity;
 import com.example.timerapp.core.TimerApp;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by robert on 25/03/15.
  */
@@ -23,9 +25,12 @@ public class CustomTimerService extends Service {
     private static final int NOTIFICATION_ID = 123;
     private static final int FREQUENCY = 1000;
     private static final int WHAT = 9;
+    private static final String TIME_FORMAT_ACTIVITY = "HH:mm:ss.SSS";
+    private static final String TIME_FORMAT_NOTIFICATION = "HH:mm:ss";
 
     private NotificationManager mNotificationManager;
     private Notification mNotification;
+    private SimpleDateFormat mTimeFormat = new SimpleDateFormat(TIME_FORMAT_ACTIVITY);
 
     private TimerApp mTimerApp;
 
@@ -60,74 +65,16 @@ public class CustomTimerService extends Service {
     }
 
     public String getFormatedTime(TimerComponent component) {
-        switch (component) {
-            case ACTIVITY:
-                return formatTime(mTimerApp.getTime());
+        switch (component){
             case NOTIFICATION:
-                return formatTimeForNotification(mTimerApp.getTime());
+                mTimeFormat.applyPattern(TIME_FORMAT_NOTIFICATION);
+                return mTimeFormat.format(mTimerApp.getTime());
+            case ACTIVITY:
+                mTimeFormat.applyPattern(TIME_FORMAT_ACTIVITY);
+                return mTimeFormat.format(mTimerApp.getTime());
             default:
                 return "";
         }
-    }
-
-
-
-    private String formatTime(long time){
-        long hours = 0;
-        long minutes = 0;
-        long seconds = 0;
-        long miliseconds = 0;
-
-        StringBuilder sb = new StringBuilder();
-
-        if (time < 1000) {
-            miliseconds = time / 100;
-        } else if (time < 60000) {
-            seconds = time / 1000;
-            time -= seconds * 1000;
-            miliseconds = (time / 100);
-        } else if (time < 3600000) {
-            hours = time / 3600000;
-            time -= hours * 3600000;
-            minutes = time / 60000;
-            time -= minutes * 60000;
-            seconds = time / 1000;
-            time -= seconds * 1000;
-            miliseconds = (time / 100);
-        }
-
-            sb.append(hours).append("h:")
-                    .append(formatDigits(minutes)).append("m:")
-                    .append(formatDigits(seconds)).append("s.")
-                    .append(miliseconds).append("ms");
-
-        return sb.toString();
-    }
-
-    private String formatTimeForNotification(long time) {
-        long hours = 0;
-        long minutes = 0;
-        long seconds = 0;
-
-        StringBuilder sb = new StringBuilder();
-
-    if (time < 60000) {
-            seconds = time / 1000;
-            time -= seconds * 1000;
-        } else if (time < 3600000) {
-            hours = time / 3600000;
-            time -= hours * 3600000;
-            minutes = time / 60000;
-            time -= minutes * 60000;
-            seconds = time / 1000;
-            time -= seconds * 1000;
-        }
-
-        sb.append(hours).append("h:")
-                .append(formatDigits(minutes)).append("m:")
-                .append(formatDigits(seconds)).append("s");
-
-        return sb.toString();
     }
 
     private String formatDigits(long num) {
