@@ -26,4 +26,15 @@
                 android:layout_weight="1"
                 android:text="@string/stop"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/button_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/test"/>
+
+    <TextView
+        android:id="@+id/test_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

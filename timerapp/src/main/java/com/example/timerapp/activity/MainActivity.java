@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ public class MainActivity extends Activity{
     private static final String START_BUTTON_STATE_KEY = "start_button_state_key";
     private Button mButtonStart;
     private Button mButtonStop;
+    private Button mButtonTest;
+    private TextView mTestText;
     private TextView mTimeCounter;
 
     private final int WHAT = 9;
@@ -66,8 +69,19 @@ public class MainActivity extends Activity{
             if(mCustomTimerService.isTimerRunning()) {
                 mButtonStart.setEnabled(true);
                 mCustomTimerService.stop();
-            } else{
+                Log.i(TAG, "isRunning");
+            } else {
+                Log.i(TAG, "isNotRunning");
                 mCustomTimerService.reset();
+            }
+        }
+    };
+
+    private View.OnClickListener mTestButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (null != mTestText) {
+                mTestText.setText(getString(R.string.hello));
             }
         }
     };
@@ -86,10 +100,13 @@ public class MainActivity extends Activity{
     private void initView() {
         mButtonStart = (Button) findViewById(R.id.button_start);
         mButtonStop = (Button) findViewById(R.id.button_stop);
+        mButtonTest = (Button) findViewById(R.id.button_test);
+        mTestText = (TextView) findViewById(R.id.test_result);
         mTimeCounter = (TextView) findViewById(R.id.time_counter_tv);
 
         mButtonStart.setOnClickListener(mStartButtonListener);
         mButtonStop.setOnClickListener(mStopButtonListener);
+        mButtonTest.setOnClickListener(mTestButtonListener);
     }
 
     @Override

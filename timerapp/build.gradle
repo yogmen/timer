@@ -3,10 +3,13 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.1.+'
+        classpath 'org.robolectric:robolectric-gradle-plugin:1.0.1'
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'org.robolectric'
+
 
 repositories {
     jcenter()
@@ -38,4 +41,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile 'junit:junit:4.10'
+    androidTestCompile 'org.robolectric:robolectric:2.4'
 }

@@ -34,6 +34,7 @@ public class CustomTimerService extends Service {
     private Handler customHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            Log.i(TAG, "msg.what: " + msg.what);
             updateNotification();
             sendMessageDelayed(Message.obtain(this, WHAT), FREQUENCY);
         }
@@ -148,7 +149,7 @@ public class CustomTimerService extends Service {
         mTimerApp.reset();
     }
 
-    public boolean isTimerRunning(){
+    public boolean isTimerRunning() {
         return TimerApp.TIMER_RUN == mTimerApp.getStatus();
     }
 

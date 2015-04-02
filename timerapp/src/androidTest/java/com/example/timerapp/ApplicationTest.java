@@ -1,13 +1,39 @@
 package com.example.timerapp;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import android.widget.TextView;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
+import com.example.timerapp.activity.MainActivity;
+
+import junit.framework.Assert;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
+
+@Config(emulateSdk = 19)
+@RunWith(RobolectricTestRunner.class)
+public class ApplicationTest {
+
+    @Before
+    public void setup(){
+
     }
+
+    @Test
+    public void clickTest_shouldSetHelloText() {
+        MainActivity activity = Robolectric.setupActivity(MainActivity.class);
+        activity.findViewById(R.id.button_test).performClick();
+
+        TextView tv =  (TextView)activity.findViewById(R.id.test_result);
+        Assert.assertTrue(tv!=null);
+
+        String expected = activity.getString(R.string.hello);
+        String real = tv.getText().toString();
+
+        Assert.assertEquals(expected, real);
+    }
+
 }
